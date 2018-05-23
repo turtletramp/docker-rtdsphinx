@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# git bash setting to prevent conversion to Windows directory names
+export MSYS_NO_PATHCONV=1
+
+# Environment variables used on this script
+dockeropts="-it --rm -v"
+dockerdir=$(pwd)
+dockertag='swcurran/sphinx'
+dockercmd="docker run ${dockeropts} ${dockerdir}:/documents/ ${dockertag}"
+buildDir="docs/build/html"
+openBrowser='open'
+if [ "$(expr substr $(uname -s) 1 5)" == "MINGW" ]; then
+    openBrowser='explorer'
+fi
+
+# =================================================================================================================
+# Usage:
+# -----------------------------------------------------------------------------------------------------------------
+usage () {
+  cat <<-EOF
+
+  Usage: $0 [command] [options]
+
+  Commands:
+
+  help - Print this usage information
+  html - Generate sphinx HTML documents (does a clean before)
+  view - Open a browser at the root of the generated HTML documentation
+  clean - Clean out the HTML documents
+  sphinx-quickstart <args> - run the sphinx-quickstart utility. No args are needed, but can be added.
+      Reference: http://www.sphinx-doc.org/en/master/man/sphinx-quickstart.html
+  sphinx-apidoc <args> source-code-path - run the sphinx-apigen utility in the current directory with the arg "-o source"
+      Needs at least the path to the source code added, and other args can be added before the path
+      Reference: http://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html
+  cli - Starts a bash shell on the docker image for ad hoc commands
+EOF
+exit 1
+}
+# -----------------------------------------------------------------------------------------------------------------
+# Functions:
+# -----------------------------------------------------------------------------------------------------------------
+
+# =================================================================================================================
+
+case "$1" in
+  html)
+      ${dockercmd} /bin/bash -c "make clean;make html"
+    ;;
+  view)
+      if [ -d ${buildDir} ]; then
+        /bin/bash -c "cd ${buildDir};${openBrowser} index.html;cd ../../.."
+      else
+        echo Directory ${buildDir} does not exist. Are you in the right directory?
+      fi
+    ;;
+  clean)
+      ${dockercmd} /bin/bash -c "make clean"
+    ;;
+  sphinx-quickstart)
+      shift
+      ${dockercmd} /bin/bash -c "sphinx-quickstart #@"
+    ;;
+  sphinx-apidoc)
+      shift
+      ${dockercmd} /bin/bash -c "sphinx-apidoc -o source #@"
+    ;;
+  cli)
+      ${dockercmd}
+    ;;
+  *)
+      usage;;
+esac
