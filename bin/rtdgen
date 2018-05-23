@@ -63,7 +63,7 @@ case "$1" in
     ;;
   sphinx-apidoc)
       shift
-      ${dockercmd} /bin/bash -c "sphinx-apidoc -o source #@"
+      ${dockercmd} /bin/bash -c "cd ..;sphinx-apidoc -o docs/source/ $@"
     ;;
   cli)
       ${dockercmd}

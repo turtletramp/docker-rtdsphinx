@@ -1,5 +1,5 @@
 # docker-sphinx
-A python3 dockerfile/image that has an opinionated set of extensions for using [Sphinx](http://sphinx-doc.org/) to generate ReadTheDocs-style documentation. 
+A python3 dockerfile/image with an opinionated set of extensions for using [Sphinx](http://sphinx-doc.org/) to generate ReadTheDocs-style (and format) documentation. 
 
 ## Extensions and Tools
 
@@ -12,6 +12,13 @@ Includes extensions for:
 * Mocking mechanism for mocking c callable code (see [documentation](http://read-the-docs.readthedocs.io/en/latest/faq.html#mock-c-extensions))
 
 Please submit pull requests for additional, useful tools and extensions for including in the tool chain.
+
+## Prerequisites
+
+* An operational Docker installation
+* Currently in the root folder of the repo of the project for which you want to generate documentation 
+
+The running of the script will create a "docs" directory in the current directory if one does not exist.
 
 ## How to Use Image: **rtdgen** bash script
 
@@ -38,20 +45,37 @@ The rtdgen script includes some awareness of the platform (windows, mac, linux) 
 
 ## How to Use Image - Docker directly
 
-Basic usage is from a docker-enabled system is:
+Basic usage is from a docker-enabled system is, while in the root directory of your project repo run:
 
     docker run -it --rm -v <your directory>:/documents/ cloudcompass/docker-rtdsphinx
 
 Running like this starts a bash shell in the docs directory within <your directory>. Use the included bash script rtdgen (see below) as a command line wrapper to run typical sphinx generation commands so you don't have type the full "docker run..." command every time.
 
-## Notes
+## Getting Started
 
-For getting started with Sphinx see the [Sphinx tutorial](http://sphinx-doc.org/tutorial.html).
+If you have never used sphinx on the project, you will want to look at the documentation and the [Sphinx tutorial](http://sphinx-doc.org/tutorial.html).  The basic steps using this image/script are:
+
+* ```rtdgen sphinx-quickstart``` # interactively set up your project - make sure you say yes to autodoc, at least
+* ```rtdgen sphinx-apidoc <path to code>``` # Generate an rst file listing the modules in your project
+    * For example: ```rtdgen sphinx-apidoc src/agent/``` to process the code in the src/agent folder
+    * Repeat for each package 
+    * Update/edit the file as the structure of your project changes
+* Edit the generated docs/source/conf.py file to at least:
+    * Include paths to your source code usually "../.." or "../../src" or whatever
+    * Include the extensions to be used - some of the ones here are NOT set in the generated ```conf.py``` file - including sphinx-rtd-theme and plantuml
+    * Change the theme from "alabaster" to "sphinx-rtd-theme
+* Edit the ```index.rst``` file to include the "modules.rst" file generated during the sphinx apidoc step. Careful of the indentation!
+* ```rtdgen html``` # generate the html version of the documentation
+    * Look for errors or warnings in the output of the generator and fix them
+    * For calls to external (likely c-callable) libraries, add them to the list at the end of the conf.py, per the example conf.py
+* ```rtdgen view``` # Open a browser window at the root of the generated documentation
+
+## Notes
 
 The workdir for the image is "docs" within <your directory>, based on the assumption that you are running this from the root of a git repo and that your sphinx setup is in docs/. Within that should be:
 
-* source # the Sphinx documentation
-* build # .gitignore'd directory into which the documentation is generated
+* ```source``` # the Sphinx documentation
+* ```build``` # .gitignore'd directory into which the documentation is generated
 
 In the simplest (and expected usage) the generated code is created in <your directory>/docs/build/html, so opening up index.html in that folder opens the root of the documentation.  That is exactly what the "**rtdgen view**" command does.
 

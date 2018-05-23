@@ -40,8 +40,6 @@ extensions = ['sphinx.ext.autodoc',
     'sphinxcontrib.plantuml',
     'sphinx.ext.githubpages']
 
-plantuml = 'plantuml'
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -55,9 +53,9 @@ source_suffix = ['.rst', '.md']
 master_doc = 'index'
 
 # General information about the project.
-project = 'VON Agent'
-copyright = '2018, Stephen Klump'
-author = 'Stephen Klump'
+project = 'My Project'
+copyright = ''
+author = ''
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -93,7 +91,6 @@ todo_include_todos = False
 # a list of builtin themes.
 #
 # html_theme = 'alabaster'
-# html_theme = 'classic'
 html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
@@ -123,7 +120,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'VONAgentdoc'
+htmlhelp_basename = ''
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -150,8 +147,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'VONAgent.tex', 'VON Agent Documentation',
-     'Stephen Klump', 'manual'),
+    (master_doc, 'MyDoc.tex', 'Documentation',
+     'Author', 'manual'),
 ]
 
 
@@ -160,7 +157,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'vonagent', 'VON Agent Documentation',
+    (master_doc, 'doc', 'Documentation',
      [author], 1)
 ]
 
@@ -171,8 +168,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'VONAgent', 'VON Agent Documentation',
-     author, 'VONAgent', 'One line description of project.',
+    (master_doc, 'DOc', 'Documentation',
+     author, 'Doc', 'One line description of project.',
      'Miscellaneous'),
 ]
 
