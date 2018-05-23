@@ -6,7 +6,7 @@ export MSYS_NO_PATHCONV=1
 # Environment variables used on this script
 dockeropts="-it --rm -v"
 dockerdir=$(pwd)
-dockertag='swcurran/sphinx'
+dockertag='cloudcompass/docker-rtdsphinx'
 dockercmd="docker run ${dockeropts} ${dockerdir}:/documents/ ${dockertag}"
 buildDir="docs/build/html"
 openBrowser='open'

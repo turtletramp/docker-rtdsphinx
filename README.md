@@ -1,5 +1,5 @@
 # docker-sphinx
-A python3 dockerfile/image that has an opionated set of extensions for using [Sphinx](http://sphinx-doc.org/) to generate ReadTheDocs-style documentation. 
+A python3 dockerfile/image that has an opinionated set of extensions for using [Sphinx](http://sphinx-doc.org/) to generate ReadTheDocs-style documentation. 
 
 ## Extensions and Tools
 
