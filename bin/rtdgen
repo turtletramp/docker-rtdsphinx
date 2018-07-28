@@ -20,7 +20,9 @@ fi
 usage () {
   cat <<-EOF
 
-  Usage: $0 [command] [options]
+  Usage: $0 [-f] command [options]
+
+  The command must be run from the directory above the project "docs" directory (e.g. the root of the repo). Use the "-f" parameter to bypass this requirement.
 
   Commands:
 
@@ -41,7 +43,25 @@ exit 1
 # Functions:
 # -----------------------------------------------------------------------------------------------------------------
 
+
 # =================================================================================================================
+
+# You must be in the "docs" directory to run this command
+if [ "$1" != "-f" ]; then
+   if [ ! -d "docs" ]; then
+    echo $0 ERROR - must be run from the directory above the "docs" directory.
+    echo Add the first parameter \"-f\" to your command to bypass this requirement.
+    exit 1
+   fi
+else
+  shift
+fi
+
+# Print usage if no command given
+if [ "$1" == "" ]; then
+   usage
+   exit 0
+fi
 
 case "$1" in
   html)
@@ -63,6 +83,7 @@ case "$1" in
     ;;
   sphinx-apidoc)
       shift
+      echo ${dockercmd} /bin/bash -c "cd ..;sphinx-apidoc -o docs/source/ $@"
       ${dockercmd} /bin/bash -c "cd ..;sphinx-apidoc -o docs/source/ $@"
     ;;
   cli)
