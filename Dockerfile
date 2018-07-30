@@ -9,18 +9,17 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Update apt-get sources AND install stuff
 RUN apt-get update && apt-get install -y -q \
-    texlive \
-    texlive-latex-extra \
-    pandoc \
-    build-essential \
-    plantuml
+       make \
+       pandoc \
+       plantuml \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install \
     sphinx \
     sphinx_rtd_theme\
     pylint\
-    aiohttp \
-    sphinxcontrib-plantuml
+    sphinxcontrib-plantuml \
+    swagger2rst
 
 RUN mkdir /documents
 
