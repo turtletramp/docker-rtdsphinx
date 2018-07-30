@@ -1,4 +1,4 @@
-# docker-sphinx
+# docker-rtdsphinx
 A python3 dockerfile/image with an opinionated set of extensions for using [Sphinx](http://sphinx-doc.org/) to generate ReadTheDocs-style (and format) documentation.
 This work is based on:
 * https://github.com/cloudcompass/docker-rtdsphinx
@@ -11,6 +11,7 @@ Includes extensions for:
 * locally generating the [ReadTheDocs theme](https://github.com/rtfd/sphinx_rtd_theme)
 * including embedded plantuml documentation in docstrings
 * [pylint](https://github.com/PyCQA/pylint) and with it, pyreverse. pyreverse can generate class diagrams for python modules.
+* [swagger2rst](https://github.com/Arello-Mobile/swagger2rst) for easy creation of REST API documentation based on Open API documentation
 
 ### Note
 To reduce the docker image size the sphinx latex support was removed from the original cloudcompass/docker-rtdsphinx image
